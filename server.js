@@ -17,10 +17,13 @@ function serveStaticFile(filename, response) {
 
 async function handleRequest(request, response) {
   if (request.method === 'GET' && request.url === '/') {
+    console.log(`Server: Received request for "${request.url}", responding with file "public/index.html"`);
     serveStaticFile('public/index.html', response);
   } else if (request.method === 'GET' && request.url === '/main.css') {
+    console.log(`Server: Received request for "${request.url}", responding with file "public/main.css"`);
     serveStaticFile('public/main.css', response);
   } else if (request.method === 'GET' && request.url === '/main.js') {
+    console.log(`Server: Received request for "${request.url}", responding with file "public/main.js"`);
     serveStaticFile('public/main.js', response);
   } else if (request.method === 'GET' && request.url === '/api/messages') {
     const data = await db.getEntries();
