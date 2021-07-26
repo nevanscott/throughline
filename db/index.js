@@ -5,8 +5,8 @@ const file = path.join(__dirname, './messages');
 
 async function getEntries() {
   try {
-    const text = await fs.readFile(file);
-    const entries = text.toString().trim().split('\n');
+    const handle = await fs.readFile(file);
+    const entries = handle.toString().trim().split('\n');
     return entries;
   } catch(error) {
     return [];
