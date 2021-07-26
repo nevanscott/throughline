@@ -2,7 +2,7 @@
   "name": "throughline",
   "version": "1.0.0",
   "description": "a simplified prototype web app connecting the dots",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js -e html,css,js"
