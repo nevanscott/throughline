@@ -4,8 +4,6 @@ NOTICE: It is not at all recommended to run this software on a live web server. 
 Set up
 ------
 
-In order to work, you'll need an empty file called `db/messages`.
-
 With `node` and `npm` installed, run `npm i` to install dependencies.
 
 
