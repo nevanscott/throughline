@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 
-const db = require('./db');
+const store = require('./store');
 
 async function serveStaticFile(filename, response) {
   const file = path.join(__dirname, filename);
@@ -17,16 +17,16 @@ async function serveStaticFile(filename, response) {
 
 async function handleRequest(request, response) {
   if (request.method === 'GET' && request.url === '/') {
-    console.log(`Server: Received request for "${request.url}", responding with file "public/index.html"`);
-    await serveStaticFile('public/index.html', response);
+    console.log(`Server: Received request for "${request.url}", responding with file "client/index.html"`);
+    await serveStaticFile('../client/index.html', response);
   } else if (request.method === 'GET' && request.url === '/main.css') {
-    console.log(`Server: Received request for "${request.url}", responding with file "public/main.css"`);
-    await serveStaticFile('public/main.css', response);
+    console.log(`Server: Received request for "${request.url}", responding with file "client/main.css"`);
+    await serveStaticFile('../client/main.css', response);
   } else if (request.method === 'GET' && request.url === '/main.js') {
-    console.log(`Server: Received request for "${request.url}", responding with file "public/main.js"`);
-    await serveStaticFile('public/main.js', response);
+    console.log(`Server: Received request for "${request.url}", responding with file "client/main.js"`);
+    await serveStaticFile('../client/main.js', response);
   } else if (request.method === 'GET' && request.url === '/api/messages') {
-    const data = await db.getEntries();
+    const data = await store.getEntries();
     response.end(JSON.stringify(data));
   } else if (request.method === 'POST' && request.url === '/api/post') {
     let data = '';
@@ -35,7 +35,7 @@ async function handleRequest(request, response) {
     })
     request.on('end', async () => {
       const entry = JSON.parse(data).message;
-      await db.writeEntry(entry);
+      await store.writeEntry(entry);
       response.end(JSON.stringify(entry));
     })
   } else {

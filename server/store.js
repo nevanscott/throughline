@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 
-const file = path.join(__dirname, './messages');
+const file = path.join(__dirname, 'messages');
 
 const NEWLINE = '\n';
 
