@@ -8,6 +8,7 @@ body {
   line-height: 1.4;
   margin-inline: auto;
   max-inline-size: 50rem;
+  padding-inline: 1em;
 }
 
 form {
