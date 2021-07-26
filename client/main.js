@@ -38,7 +38,7 @@ async function postMessage(e) {
   e.preventDefault();
   const $input = document.getElementById('message');
   const input = $input.value;
-  const message = await postData('/api/post', { message: input });
+  const message = await postData('/api/post', input);
   renderMessage(message);
   $input.value = '';
 }

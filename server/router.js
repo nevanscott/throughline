@@ -34,7 +34,7 @@ async function handleRequest(request, response) {
       data += chunk;
     })
     request.on('end', async () => {
-      const entry = JSON.parse(data).message;
+      const entry = JSON.parse(data);
       await store.writeEntry(entry);
       response.end(JSON.stringify(entry));
     })
