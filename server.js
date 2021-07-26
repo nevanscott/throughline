@@ -1,10 +1,11 @@
 const http = require('http');
 const server = http.createServer();
+const path = require('path');
 const fs = require('fs');
 const db = require('./db');
 
 function serveStaticFile(filename, response) {
-  fs.readFile(__dirname + '/' + filename, function (error, data) {
+  fs.readFile(path.join(__dirname, filename), function (error, data) {
     if (error) {
       response.writeHead(404);
       response.end(JSON.stringify(error));
