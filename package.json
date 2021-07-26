@@ -11,10 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "jsonfile": "^6.1.0",
-    "nodemon": "^2.0.12",
-    "polka": "^0.5.2",
-    "sirv": "^1.0.12"
+    "nodemon": "^2.0.12"
   }
 }

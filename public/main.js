@@ -28,8 +28,8 @@ function renderMessage(message) {
 }
 
 async function loadMessages() {
-  const { messages } = await getData('/api/messages');
-  messages.forEach(({ message }) => {
+  const messages = await getData('/api/messages');
+  messages.forEach(message => {
     renderMessage(message);
   });
 }
@@ -38,7 +38,7 @@ async function postMessage(e) {
   e.preventDefault();
   const $input = document.getElementById('message');
   const input = $input.value;
-  const { message } = await postData('/api/post', { message: input });
+  const message = await postData('/api/post', { message: input });
   renderMessage(message);
   $input.value = '';
 }

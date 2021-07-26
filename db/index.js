@@ -1,18 +1,20 @@
-const jsonfile = require('jsonfile');
 const path = require('path');
+const fs = require('fs');
 
-const file = path.join(__dirname, './data.json');
+const file = path.join(__dirname, './messages');
 
 async function writeEntry(entry) {
-  const data = await jsonfile.readFile(file).catch(error => console.error(error));
-  data.messages.push(entry);
-  await jsonfile.writeFile(file, data, { spaces: 2 }).catch(error => console.error(error));
-  console.log('Write complete');
+  const text = await fs.promises.readFile(file).catch(error => console.error(error));
+  const data = text.toString().split('\n').slice(0, -1);
+  data.push(entry);
+  const updated = data.join('\n') + '\n';
+  await fs.promises.writeFile(file, updated).catch(error => console.error(error));
 }
 
 async function getEntries() {
-  const entries = await jsonfile.readFile(file).catch(error => console.error(error));
-  return entries;
+  const text = await fs.promises.readFile(file).catch(error => console.error(error));
+  const data = text.toString().split('\n').slice(0, -1);
+  return data;
 }
 
 module.exports = {
