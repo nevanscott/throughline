@@ -1,8 +1,9 @@
 const http = require('http');
-const server = http.createServer();
 const path = require('path');
 const fs = require('fs').promises;
 const db = require('./db');
+
+const server = http.createServer();
 
 async function serveStaticFile(filename, response) {
   const file = path.join(__dirname, filename);
