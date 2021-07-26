@@ -1,31 +1,31 @@
 const http = require('http');
 const server = http.createServer();
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises;
 const db = require('./db');
 
-function serveStaticFile(filename, response) {
-  fs.readFile(path.join(__dirname, filename), function (error, data) {
-    if (error) {
-      response.writeHead(404);
-      response.end(JSON.stringify(error));
-      return;
-    }
+async function serveStaticFile(filename, response) {
+  const file = path.join(__dirname, filename);
+  try {
+    const data = await fs.readFile(file);
     response.writeHead(200);
     response.end(data);
-  });
+  } catch(error) {
+    response.writeHead(404);
+    response.end(JSON.stringify(error));
+  }
 }
 
 async function handleRequest(request, response) {
   if (request.method === 'GET' && request.url === '/') {
     console.log(`Server: Received request for "${request.url}", responding with file "public/index.html"`);
-    serveStaticFile('public/index.html', response);
+    await serveStaticFile('public/index.html', response);
   } else if (request.method === 'GET' && request.url === '/main.css') {
     console.log(`Server: Received request for "${request.url}", responding with file "public/main.css"`);
-    serveStaticFile('public/main.css', response);
+    await serveStaticFile('public/main.css', response);
   } else if (request.method === 'GET' && request.url === '/main.js') {
     console.log(`Server: Received request for "${request.url}", responding with file "public/main.js"`);
-    serveStaticFile('public/main.js', response);
+    await serveStaticFile('public/main.js', response);
   } else if (request.method === 'GET' && request.url === '/api/messages') {
     const data = await db.getEntries();
     response.end(JSON.stringify(data));
