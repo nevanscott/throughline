@@ -8,7 +8,7 @@ const NEWLINE = '\n';
 async function getEntries() {
   try {
     const handle = await fs.readFile(file);
-    const entries = handle.toString().trim().split(NEWLINE);
+    const entries = handle.toString().split(NEWLINE).slice(0,-1);
     return entries;
   } catch(error) {
     return [];
