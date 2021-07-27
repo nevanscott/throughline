@@ -16,17 +16,19 @@ async function serveStaticFile(filename, response) {
 }
 
 async function handleRequest(request, response) {
+  console.log(`Router: Received ${request.method} request for ${request.url}`);
   if (request.method === 'GET' && request.url === '/') {
-    console.log(`Server: Received request for "${request.url}", responding with file "client/index.html"`);
+    console.log(`Router: Responding with file client/index.html`);
     await serveStaticFile('../client/index.html', response);
   } else if (request.method === 'GET' && request.url === '/main.css') {
-    console.log(`Server: Received request for "${request.url}", responding with file "client/main.css"`);
+    console.log(`Router: Responding with file client/main.css`);
     await serveStaticFile('../client/main.css', response);
   } else if (request.method === 'GET' && request.url === '/main.js') {
-    console.log(`Server: Received request for "${request.url}", responding with file "client/main.js"`);
+    console.log(`Router: Responding with file client/main.js`);
     await serveStaticFile('../client/main.js', response);
   } else if (request.method === 'GET' && request.url === '/api/messages') {
     const data = await store.getEntries();
+    console.log(`Router: Responding with list of messages`);
     response.end(JSON.stringify(data));
   } else if (request.method === 'POST' && request.url === '/api/post') {
     let data = '';
@@ -35,7 +37,9 @@ async function handleRequest(request, response) {
     })
     request.on('end', async () => {
       const entry = JSON.parse(data);
+      console.log(`Router: Sending new message to Store`);
       await store.writeEntry(entry);
+      console.log(`Router: Responding with new message`);
       response.end(JSON.stringify(entry));
     })
   } else {
