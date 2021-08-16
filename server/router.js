@@ -16,21 +16,22 @@ async function serveStaticFile(filename, response) {
 }
 
 async function handleRequest(request, response) {
+  const { pathname } = new URL(request.url, `http://${request.headers.host}`);
   console.log(`Router: Received ${request.method} request for ${request.url}`);
-  if (request.method === 'GET' && request.url === '/') {
+  if (request.method === 'GET' && pathname === '/') {
     console.log(`Router: Responding with file client/index.html`);
     await serveStaticFile('../client/index.html', response);
-  } else if (request.method === 'GET' && request.url === '/main.css') {
+  } else if (request.method === 'GET' && pathname === '/main.css') {
     console.log(`Router: Responding with file client/main.css`);
     await serveStaticFile('../client/main.css', response);
-  } else if (request.method === 'GET' && request.url === '/main.js') {
+  } else if (request.method === 'GET' && pathname === '/main.js') {
     console.log(`Router: Responding with file client/main.js`);
     await serveStaticFile('../client/main.js', response);
-  } else if (request.method === 'GET' && request.url === '/api/messages') {
+  } else if (request.method === 'GET' && pathname === '/api/messages') {
     const data = await store.getEntries();
     console.log(`Router: Responding with list of messages`);
     response.end(JSON.stringify(data));
-  } else if (request.method === 'POST' && request.url === '/api/post') {
+  } else if (request.method === 'POST' && pathname === '/api/post') {
     let data = '';
     request.on('data', chunk => {
       data += chunk;
