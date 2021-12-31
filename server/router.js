@@ -34,7 +34,6 @@ async function handleRequest(request, response) {
       data += chunk;
     });
     request.on('end', async () => {
-      console.log(data);
       const formdata = querystring.parse(data);
       const entry = formdata.message;
       console.log(`Router: Sending new message to Store`);
