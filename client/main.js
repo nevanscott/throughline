@@ -23,7 +23,7 @@ function renderMessage(message) {
   const $messages = document.getElementById('messages');
   let $message = document.createElement('li');
   $message.classList.add('message');
-  $message.innerHTML = message;
+  $message.textContent = message;
   $messages.prepend($message);
 }
 
