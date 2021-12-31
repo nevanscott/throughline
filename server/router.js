@@ -1,7 +1,12 @@
 const path = require('path');
 const fs = require('fs').promises;
+const querystring = require('querystring');
+
+const nunjucks = require('nunjucks');
 
 const store = require('./store');
+
+nunjucks.configure('client', { autoescape: true });
 
 async function serveStaticFile(filename, response) {
   const file = path.join(__dirname, filename);
@@ -20,7 +25,25 @@ async function handleRequest(request, response) {
   const { pathname } = new URL(request.url, `http://${request.headers.host}`);
   if (request.method === 'GET' && pathname === '/') {
     console.log(`Router: Responding with file client/index.html`);
-    await serveStaticFile('../client/index.html', response);
+    const messages = await store.getEntries();
+    const body = nunjucks.render('index.html', { messages });
+    response.end(body);
+  } else if (request.method === 'POST' && pathname === '/') {
+    let data = '';
+    request.on('data', chunk => {
+      data += chunk;
+    });
+    request.on('end', async () => {
+      console.log(data);
+      const formdata = querystring.parse(data);
+      const entry = formdata.message;
+      console.log(`Router: Sending new message to Store`);
+      await store.writeEntry(entry);
+      console.log(`Router: Redirecting to /`);
+      response.statusCode = 302;
+      response.setHeader('Location', '/');
+      response.end();
+    });
   } else if (request.method === 'GET' && pathname === '/main.css') {
     console.log(`Router: Responding with file client/main.css`);
     await serveStaticFile('../client/main.css', response);
@@ -35,14 +58,14 @@ async function handleRequest(request, response) {
     let data = '';
     request.on('data', chunk => {
       data += chunk;
-    })
+    });
     request.on('end', async () => {
       const entry = JSON.parse(data);
       console.log(`Router: Sending new message to Store`);
       await store.writeEntry(entry);
       console.log(`Router: Responding with new message`);
       response.end(JSON.stringify(entry));
-    })
+    });
   } else {
     response.statusCode = 404;
     response.end();

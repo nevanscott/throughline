@@ -43,6 +43,4 @@ async function postMessage(e) {
   $input.value = '';
 }
 
-loadMessages();
-
 document.getElementById('post').addEventListener('submit', postMessage);

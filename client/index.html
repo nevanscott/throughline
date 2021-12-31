@@ -7,11 +7,15 @@
     <script src="main.js" defer></script>
   </head>
   <body>
-    <form id="post" action="index.html" method="post">
+    <form id="post" action="/" method="post" autocomplete="off">
       <label for="message">What’s up?</label>
       <input type="text" id="message" name="message" value="">
-      <button type="submit" name="button">Post</button>
+      <button type="submit">Post</button>
     </form>
-    <ul id="messages" class="messages"></ul>
+    <ul id="messages" class="messages">
+      {% for message in messages | reverse %}
+        <li class="message">{{ message }}</li>
+      {% endfor %}
+    </ul>
   </body>
 </html>
