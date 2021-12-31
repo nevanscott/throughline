@@ -40,8 +40,9 @@ async function handleRequest(request, response) {
       console.log(`Router: Sending new message to Store`);
       await store.writeEntry(entry);
       console.log(`Router: Redirecting to /`);
-      response.statusCode = 302;
-      response.setHeader('Location', '/');
+      response.writeHead(302, {
+        'Location': '/'
+      });
       response.end();
     });
   } else if (request.method === 'GET' && pathname === '/main.css') {
@@ -67,7 +68,7 @@ async function handleRequest(request, response) {
       response.end(JSON.stringify(entry));
     });
   } else {
-    response.statusCode = 404;
+    response.writeHead(404);
     response.end();
   }
 }
