@@ -41,6 +41,7 @@ async function postMessage(e) {
   const message = await postData('/api/post', input);
   renderMessage(message);
   $input.value = '';
+  $input.focus();
 }
 
 document.getElementById('post').addEventListener('submit', postMessage);
