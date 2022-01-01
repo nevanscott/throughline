@@ -2,11 +2,9 @@ const path = require('path');
 const fs = require('fs').promises;
 const querystring = require('querystring');
 
-const nunjucks = require('nunjucks');
-
 const store = require('./store');
 
-nunjucks.configure('client', { autoescape: true });
+const render = require('../client/index.html');
 
 async function serveStaticFile(filename, response) {
   const file = path.join(__dirname, filename);
@@ -25,8 +23,8 @@ async function handleRequest(request, response) {
   const { pathname } = new URL(request.url, `http://${request.headers.host}`);
   if (request.method === 'GET' && pathname === '/') {
     console.log(`Router: Responding with file client/index.html`);
-    const messages = await store.getEntries();
-    const body = nunjucks.render('index.html', { messages });
+    const messages = await store.getEntries().then(messages => messages.reverse());
+    const body = render({ messages });
     response.end(body);
   } else if (request.method === 'POST' && pathname === '/') {
     let data = '';

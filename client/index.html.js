@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+module.exports = ({ messages }) => `<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -13,9 +13,11 @@
       <button type="submit">Post</button>
     </form>
     <ul id="messages" class="messages">
-      {% for message in messages | reverse %}
-        <li class="message">{{ message }}</li>
-      {% endfor %}
+      ${
+        messages.map(message =>
+          `<li class="message">${message}</li>`
+        ).join("\n      ")
+      }
     </ul>
   </body>
-</html>
+</html>`;
