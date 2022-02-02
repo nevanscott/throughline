@@ -4,7 +4,6 @@ module.exports = ({ messages }) => `<!DOCTYPE html>
     <meta charset="utf-8">
     <title>Throughline</title>
     <link rel="stylesheet" href="main.css">
-    <script src="main.js" defer></script>
   </head>
   <body>
     <form id="post" action="/" method="post" autocomplete="off">
