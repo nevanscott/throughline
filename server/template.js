@@ -7,9 +7,9 @@ module.exports = ({ messages }) => `<!DOCTYPE html>
   </head>
   <body>
     <form id="post" action="/" method="post" autocomplete="off">
-      <label for="message">What’s up?</label>
+      <label for="message">Message</label>
       <input type="text" id="message" name="message" value="" autofocus>
-      <button type="submit">Post</button>
+      <button type="submit">Send</button>
     </form>
     <ul id="messages" class="messages">
       ${
