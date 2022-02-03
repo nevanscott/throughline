@@ -22,8 +22,8 @@ async function handleRequest(request, response) {
   console.log(`Router: Received ${request.method} request for ${request.url}`);
   const { pathname } = new URL(request.url, `http://${request.headers.host}`);
   if (request.method === 'GET' && pathname === '/') {
-    console.log(`Router: Responding with file client/index.html`);
-    const messages = await store.getEntries().then(messages => messages.reverse());
+    console.log(`Router: Responding with template loaded with messages`);
+    const messages = await store.getMessages().then(messages => messages.reverse());
     const body = template({ messages });
     response.end(body);
   } else if (request.method === 'GET' && pathname === '/main.css') {
@@ -35,10 +35,11 @@ async function handleRequest(request, response) {
       data += chunk;
     });
     request.on('end', async () => {
-      const formdata = querystring.parse(data);
-      const entry = formdata.message;
-      console.log(`Router: Sending new message to Store`);
-      await store.writeEntry(entry);
+      const { message } = querystring.parse(data);
+      if(message) {
+        console.log(`Router: Sending new message to Store`);
+        await store.writeMessage(message);
+      }
       console.log(`Router: Redirecting to /`);
       response.writeHead(302, {
         'Location': '/'

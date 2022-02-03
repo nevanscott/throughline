@@ -5,7 +5,7 @@ const file = path.join(__dirname, 'messages');
 
 const NEWLINE = '\n';
 
-async function getEntries() {
+async function getMessages() {
   console.log(`Store: Sending list of messages`);
   try {
     const handle = await fs.readFile(file);
@@ -16,11 +16,11 @@ async function getEntries() {
   }
 }
 
-async function writeEntry(entry) {
+async function writeMessage(message) {
   try {
-    const entries = await getEntries();
-    entries.push(entry);
-    const updated = entries.join(NEWLINE) + NEWLINE;
+    const messsages = await getMessages();
+    messsages.push(message);
+    const updated = messsages.join(NEWLINE) + NEWLINE;
     console.log(`Store: Writing new message to file`);
     await fs.writeFile(file, updated);
   } catch(error) {
@@ -29,6 +29,6 @@ async function writeEntry(entry) {
 }
 
 module.exports = {
-  writeEntry,
-  getEntries
+  getMessages,
+  writeMessage
 };
