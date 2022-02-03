@@ -45,9 +45,6 @@ async function handleRequest(request, response) {
   } else if (request.method === 'GET' && pathname === '/main.css') {
     console.log(`Router: Responding with file client/main.css`);
     await serveStaticFile('../client/main.css', response);
-  } else if (request.method === 'GET' && pathname === '/main.js') {
-    console.log(`Router: Responding with file client/main.js`);
-    await serveStaticFile('../client/main.js', response);
   } else {
     response.writeHead(404);
     response.end();
