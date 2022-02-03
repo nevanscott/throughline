@@ -26,7 +26,10 @@ async function handleRequest(request, response) {
     const messages = await store.getEntries().then(messages => messages.reverse());
     const body = template({ messages });
     response.end(body);
-  } else if (request.method === 'POST' && pathname === '/') {
+  } else if (request.method === 'GET' && pathname === '/main.css') {
+    console.log(`Router: Responding with file client/main.css`);
+    await serveStaticFile('../client/main.css', response);
+  } else if (request.method === 'POST' && pathname === '/message') {
     let data = '';
     request.on('data', chunk => {
       data += chunk;
@@ -42,9 +45,6 @@ async function handleRequest(request, response) {
       });
       response.end();
     });
-  } else if (request.method === 'GET' && pathname === '/main.css') {
-    console.log(`Router: Responding with file client/main.css`);
-    await serveStaticFile('../client/main.css', response);
   } else {
     response.writeHead(404);
     response.end();
