@@ -79,14 +79,14 @@ button {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #0c0c0c;
+    background-color: #090909;
     color: #DDD;
   }
   [type=text] {
-    background-color: #131313;
+    background-color: #161616;
     color: inherit;
   }
   .message {
-    background-color: #131313;
+    background-color: #161616;
   }
 }
