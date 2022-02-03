@@ -2,7 +2,7 @@ module.exports = ({ messages }) => `<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Throughline</title>
+    <title>Thread</title>
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
